@@ -6,8 +6,8 @@ depths = File.readlines(input).map(&:chomp).map(&:to_i)
 
 increases = 0
 
-depths.each_with_index do |d, i|
-  increases += 1 if i != 0 && (d - depths[i - 1]).positive?
+depths.each_cons(2) do |d|
+  increases += 1 if (d.last - d.first).positive?
 end
 
 puts increases
