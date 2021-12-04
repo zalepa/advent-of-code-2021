@@ -10,3 +10,7 @@ method that I don't frequently use (relying on `> 0`).
 ## Day 2
 Nothing overly interesting, but a few things not used often and a heavily OO 
 approach.
+
+# Day 3
+Used Ruby's native `Matrix` class, it was not great. Quite tired for part 2, so
+not very clever.
