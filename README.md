@@ -24,4 +24,6 @@ part 1 simply wound not complete execution because I naively represented the
 grid as a matrix. Put it aside for the day and realized only the data (and not
 absence of data) need be stored, which led to a hash-based implementation of 
 the lines.  Also, a quick search for finding all points on a line between two 
-points led to the Bresenham library, which made the solution quite short. 
+points led to the Bresenham library, which made the solution quite short. Also
+enjoyed that part 1's solution was only a guard clause away from part 2's 
+solution.
