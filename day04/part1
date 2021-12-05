@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'pp'
+require_relative './input_loader'
+require_relative './board'
+
+parsed_input = InputLoader.load('./input')
+
+boards = parsed_input[:boards].map do |b|
+  Board.new(b)
+end
+
+vals = parsed_input[:commands].split(',')
+
+vals.each do |v|
+  boards.each do |b|
+    b.play(v.to_i)
+    winner = b.winner
+    if winner
+      puts b.calculate_score(v.to_i)
+      exit
+    end
+  end
+
+  # winner = board.winner
+  # if winner
+  #   
+  #   puts board
+  #   puts winner
+  #   exit
+  # end
+  # puts board
+end

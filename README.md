@@ -14,3 +14,6 @@ approach.
 # Day 3
 Used Ruby's native `Matrix` class, it was not great. Quite tired for part 2, so
 not very clever.
+
+# Day 4
+A fairly straightfoward solution, `Matrix::transpose` makes another apperance.
