@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative './swarm'
+
+input = File.read('./input').split(',').map(&:to_i)
+
+swarm = Swarm.new(input)
+swarm.simulate(days: 80)
+
+puts swarm.count
