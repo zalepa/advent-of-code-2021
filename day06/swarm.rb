@@ -4,26 +4,34 @@
 class Swarm
   attr_reader :state
 
-  def initialize(inital_state)
-    @state = inital_state
+  def initialize(initial_state)
+    @state = Array.new(9, 0)
+    initial_state.each { |s| @state[s] += 1 }
     @day = 0
   end
 
   def tick
     @day += 1
-    # decrement current states
-    new_laternfish_count = @state.filter(&:zero?).count
 
-    @state = @state.map do |fish|
-      fish.zero? ? 6 : fish - 1
-    end
+    new_state = Array.new(9, 0)
 
-    new_laternfish = Array.new(new_laternfish_count, 8)
-    @state.concat(new_laternfish)
+    new_state[6] += @state[0]
+    new_state[8] += @state[0]
+
+    new_state[0] += @state[1]
+    new_state[1] += @state[2]
+    new_state[2] += @state[3]
+    new_state[3] += @state[4]
+    new_state[4] += @state[5]
+    new_state[5] += @state[6]
+    new_state[6] += @state[7]
+    new_state[7] += @state[8]
+
+    @state = new_state
   end
 
   def count
-    @state.count
+    @state.inject(&:+)
   end
 
   def simulate(options)

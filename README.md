@@ -27,3 +27,8 @@ the lines.  Also, a quick search for finding all points on a line between two
 points led to the Bresenham library, which made the solution quite short. Also
 enjoyed that part 1's solution was only a guard clause away from part 2's 
 solution.
+
+# Day 6
+Another good one. For part 1, the brute force approach worked but in part 2 I 
+quickly grinded to a halt. If you data can grow arbitrarily but a set of 
+designated states is constant, represent your data with the states if possible.
