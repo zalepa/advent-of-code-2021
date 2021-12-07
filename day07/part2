@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+
+require 'pp'
+require_relative './swarm'
+
+initial_positions = File.read('./input').split(',').map(&:to_i)
+
+swarm = Swarm.new(initial_positions)
+
+swarm.calculate_increasing_fuel_consumption
+
+pp Swarm.new(initial_positions).best_increasing_fuel_consumption

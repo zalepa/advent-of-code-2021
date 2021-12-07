@@ -32,3 +32,8 @@ solution.
 Another good one. For part 1, the brute force approach worked but in part 2 I 
 quickly grinded to a halt. If you data can grow arbitrarily but a set of 
 designated states is constant, represent your data with the states if possible.
+
+# Day 7
+Fairly straightfoward implementation. Difficulties included remembering the term
+arithemtic sequence for part 2 and choosing the value of `@max` (still may not 
+have chosen it right).
