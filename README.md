@@ -37,3 +37,9 @@ designated states is constant, represent your data with the states if possible.
 Fairly straightfoward implementation. Difficulties included remembering the term
 arithemtic sequence for part 2 and choosing the value of `@max` (still may not 
 have chosen it right).
+
+# Day 8
+Part 1 was straightforward counting, but part 2 was a bit of a mess. Took a bit 
+of time to make sense of the actual problem statement and then some trial and 
+error until arriving at a more graphical interpreation of the problem. After 
+that, things wrapped up pretty quickly.

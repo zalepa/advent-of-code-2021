@@ -1,0 +1,86 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'pp'
+require 'set'
+
+mapping = {}
+
+sample_input = File.read('./input').split(/\n/).map do |l|
+  signal_patterns, output_value = l.split(' | ')
+  signal_patterns = signal_patterns.split(' ')
+  output_values = output_value.split(' ')
+  { signal_patterns: signal_patterns, output_values: output_values }
+end
+
+total = 0
+
+sample_input.each do |line|
+  mapping = Array.new(10) { [] }
+
+  line[:signal_patterns].each do |p|
+    p = p.split('').sort.to_set
+
+    mapping[1] << p if p.length == 2
+    mapping[7] << p if p.length == 3
+    mapping[4] << p if p.length == 4
+    mapping[8] << p if p.length == 7
+
+    if p.length == 6
+      mapping[0] << p
+      mapping[6] << p
+      mapping[9] << p
+    end
+
+    if p.length == 5
+      mapping[2] << p
+      mapping[3] << p
+      mapping[5] << p
+    end
+  end
+
+  # Here, mapping[1, 4, 7, and 8] are all of length 1.
+  # Now we'll do some subtraction to identify segments which can be used to
+  # identify other numbers
+
+  # First, bottom corner can be used to identify 9 from 0, 6, 9
+  bottom_corner = mapping[8][0] - mapping[4][0] - mapping[7][0]
+  mapping[9] = mapping[9].reject { |s| bottom_corner.subset?(s) }
+  mapping[6] = mapping[6].reject { |s| s == mapping[9][0] }
+  mapping[0] = mapping[6].reject { |s| s == mapping[9][0] }
+
+  # Next we'll identify the B-D section and use this to distinguish between 0 and 6
+  upper_right_ell = mapping[4][0] - mapping[1][0]
+  mapping[6] = mapping[6].filter { |s| upper_right_ell.subset?(s) }
+  mapping[0] = mapping[0].reject { |s| upper_right_ell.subset?(s) }
+
+  # That leaves 2, 3, 5
+  # 9 - 6 gives the top right side, five doesn't have this
+  top_right_side = mapping[9][0] - mapping[6][0]
+  mapping[2] = mapping[2].filter { |s| top_right_side.subset?(s) }
+  mapping[3] = mapping[3].filter { |s| top_right_side.subset?(s) }
+  mapping[5] = mapping[5].reject { |s| top_right_side.subset?(s) }
+
+  # Last numbers are 2 and 3
+  # 8 - 5 - 1 yields the bottom left side, only 2 has this
+  bottom_left_side = mapping[8][0] - mapping[5][0] - mapping[1][0]
+  mapping[2] = mapping[2].filter { |s| bottom_left_side.subset?(s) }
+  mapping[3] = mapping[3].reject { |s| bottom_left_side.subset?(s) }
+
+  # Condense mapping
+  mapping = mapping.map { |v| v[0] }
+
+  # All mappings are here now, time to process output
+  out = line[:output_values].map do |output|
+    val = ''
+    output_set = output.split('').to_set
+    mapping.each.with_index do |set, i|
+      val += i.to_s if set.eql?(output_set)
+    end
+    val
+  end.join.to_i
+
+  total += out
+end
+
+pp total
