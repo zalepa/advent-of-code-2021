@@ -43,3 +43,9 @@ Part 1 was straightforward counting, but part 2 was a bit of a mess. Took a bit
 of time to make sense of the actual problem statement and then some trial and 
 error until arriving at a more graphical interpreation of the problem. After 
 that, things wrapped up pretty quickly.
+
+# Day 9
+(still need to finish part 2)
+
+# Day 10
+A straightforward stack-based parser

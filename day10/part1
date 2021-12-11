@@ -1,0 +1,62 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+input = File.readlines('./input').map(&:chomp)
+
+module NavigationSystem
+  def self.parse(line)
+    valid = true
+    illegal_character = nil
+    stack = []
+    chars = line.split('')
+    chars.each do |c|
+      unless c.match(/\)|\]|\}|\>/)
+        stack.push(c) 
+        next
+      else 
+        case c
+        when ')'
+          last = stack.pop
+          illegal_character = c if last != '('
+        when '}'
+          last = stack.pop
+          illegal_character = c if last != '{'
+        when ']'
+          last = stack.pop
+          illegal_character = c if last != '['
+        when '>'
+          last = stack.pop
+          illegal_character = c if last != '<'
+        end
+      end
+      if illegal_character
+        valid = false
+        break
+      end
+    end
+    {
+      status: valid ? 'valid' : 'invalid',
+      illegal_character: illegal_character
+    }
+  end
+end
+
+score = 0
+
+input.each do |line|
+  res = NavigationSystem.parse(line)
+  if res[:status] == 'invalid'
+    case res[:illegal_character]
+    when ')'
+      score += 3
+    when ']'
+      score += 57
+    when '}'
+      score += 1197
+    when '>'
+      score += 25137
+    end
+  end
+end
+
+pp score

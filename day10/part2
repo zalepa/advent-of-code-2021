@@ -1,0 +1,82 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+input = File.readlines('./input').map(&:chomp)
+
+module NavigationSystem
+  def self.parse(line)
+    valid = true
+    illegal_character = nil
+    stack = []
+    chars = line.split('')
+    chars.each do |c|
+      unless c.match(/\)|\]|\}|\>/)
+        stack.push(c)
+        next
+      else
+        case c
+        when ')'
+          last = stack.pop
+          illegal_character = c if last != '('
+        when '}'
+          last = stack.pop
+          illegal_character = c if last != '{'
+        when ']'
+          last = stack.pop
+          illegal_character = c if last != '['
+        when '>'
+          last = stack.pop
+          illegal_character = c if last != '<'
+        end
+      end
+      if illegal_character
+        valid = false
+        break
+      end
+    end
+    {
+      status: valid ? 'valid' : 'invalid',
+      illegal_character: illegal_character
+    }
+  end
+
+  def self.debug(line)
+    stack = []
+    line.split('').each do |char|
+      stack.push(char)
+      stack.pop(2) if stack[-1] == ')' && stack[-2] == '('
+      stack.pop(2) if stack[-1] == ']' && stack[-2] == '['
+      stack.pop(2) if stack[-1] == '}' && stack[-2] == '{'
+      stack.pop(2) if stack[-1] == '>' && stack[-2] == '<'
+    end
+    stack
+  end
+end
+
+uncorrupted_lines = input.filter do |line|
+  res = NavigationSystem.parse(line)
+  res[:status] == 'invalid' ? nil : line
+end
+
+debugged_lines = uncorrupted_lines
+  .map { |l| NavigationSystem.debug(l) }
+  .map do |l|
+    total_score = 0
+    l.reverse.each do |c|
+      total_score *= 5
+      case c
+      when '('
+        total_score += 1
+      when '['
+        total_score += 2
+      when '{'
+        total_score += 3
+      when '<'
+        total_score += 4
+      end
+    end
+
+    total_score
+  end
+
+pp debugged_lines.sort[debugged_lines.count / 2]
