@@ -49,3 +49,9 @@ that, things wrapped up pretty quickly.
 
 # Day 10
 A straightforward stack-based parser
+
+# Day 11
+A few misteps with a recursive solution until I tried out a null trick. Switched
+to JavaScript for this one after sketching out the solution in Ruby, which was
+not happening. Sadly, feel a bit more productive hacking in JavaScript these days.
+
